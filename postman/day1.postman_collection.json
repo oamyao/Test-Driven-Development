@@ -1,0 +1,62 @@
+{
+  "info": {
+    "_postman_id": "2726d01f-6615-4890-813a-6ca4ea0e3eec",
+    "name": "day1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "1453931",
+    "_collection_link": "https://red-firefly-245852.postman.co/workspace/demo-ai~cd002d49-ab51-4a5e-a5e7-df614633d34d/collection/1453931-2726d01f-6615-4890-813a-6ca4ea0e3eec?action=share&source=collection_link&creator=1453931"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response schema is valid\", function () {",
+              "    const response = pm.response.json();",
+              "    const dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;",
+              "    ",
+              "    // Validate response is an array",
+              "    pm.expect(response).to.be.an('array');",
+              "    pm.expect(response.length).to.be.greaterThan(0);",
+              "    ",
+              "    // Validate each object in the array",
+              "    response.forEach((item, index) => {",
+              "        // Check required properties exist",
+              "        pm.expect(item).to.have.property('date');",
+              "        pm.expect(item).to.have.property('temperatureC');",
+              "        pm.expect(item).to.have.property('summary');",
+              "        pm.expect(item).to.have.property('temperatureF');",
+              "        ",
+              "        // Validate data types",
+              "        pm.expect(item.date).to.be.a('string', `Item ${index}: date should be a string`);",
+              "        pm.expect(item.temperatureC).to.be.a('number', `Item ${index}: temperatureC should be a number`);",
+              "        pm.expect(item.summary).to.be.a('string', `Item ${index}: summary should be a string`);",
+              "        pm.expect(item.temperatureF).to.be.a('number', `Item ${index}: temperatureF should be a number`);",
+              "        ",
+              "        // Validate date format (YYYY-MM-DD)",
+              "        pm.expect(item.date).to.match(dateRegex, `Item ${index}: date should be in YYYY-MM-DD format`);",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:9080/weatherforecast"
+      },
+      "response": []
+    }
+  ]
+}

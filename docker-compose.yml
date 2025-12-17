@@ -1,0 +1,6 @@
+services:
+  api:
+    image: myapi:latest
+    build: .
+    ports:
+      - "9080:8080"
